@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -16,7 +18,8 @@ public class PostController {
 
     @PostMapping("/post")
     public ResponseEntity<?> post(@RequestBody PostRequest postRequest) {
-        return ResponseEntity.ok(postService.createPost(postRequest));
+        Long id = postService.createPost(postRequest);
+        return ResponseEntity.ok(Map.of("id", id));
     }
 
 }
