@@ -1,11 +1,19 @@
 package com.bung.tdd.controller;
 
+import com.bung.tdd.dto.PostRequest;
 import com.bung.tdd.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.ObjectMapper;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @WebMvcTest(controllers = PostController.class)
 class PostControllerTest {
@@ -17,12 +25,16 @@ class PostControllerTest {
     PostService postService;
 
     @Test
-    void post_method_테스트() {
+    void post_method_테스트() throws Exception {
         //given
-
+        PostRequest postRequest = new PostRequest("제목", "내용");
 
         //when & then
-
+        mockMvc.perform(post("/post")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(postRequest)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
 }

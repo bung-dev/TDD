@@ -1,6 +1,5 @@
 package com.bung.tdd.controller;
 
-import com.bung.tdd.domain.Post;
 import com.bung.tdd.dto.PostRequest;
 import com.bung.tdd.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +14,10 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping
+    @PostMapping("/post")
     public ResponseEntity<?> post(@RequestBody PostRequest postRequest) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return ResponseEntity.ok(postRequest);
     }
 
 }
