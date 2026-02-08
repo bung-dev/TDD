@@ -16,8 +16,7 @@ public class PostController {
 
     @PostMapping("/post")
     public ResponseEntity<?> post(@RequestBody PostRequest postRequest) {
-
-        return ResponseEntity.ok(postRequest);
+        return ResponseEntity.ok(postService.createPost(postRequest));
     }
 
 }
