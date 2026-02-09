@@ -42,4 +42,18 @@ class PostControllerTest {
         verify(postService).createPost(any(PostRequest.class));
     }
 
+    @Test
+    void post_method_테스트2() throws Exception {
+        //given
+        PostRequest postRequest = new PostRequest("", "내용");
+
+        given(postService.createPost(any(PostRequest.class))).willThrow(new IllegalArgumentException());
+        //when & then
+        mockMvc.perform(post("/post")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(postRequest)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
 }
